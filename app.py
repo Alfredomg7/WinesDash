@@ -1,15 +1,19 @@
 from dash import Dash
 import dash_bootstrap_components as dbc
-from layout import layout
+import polars as pl
+from layout import create_layout
 from callbacks import register_callbacks
+from init_db import init_db
 
-def create_app() -> Dash:
+def create_app(df: pl.DataFrame) -> Dash:
     app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
     app.title = "Wines Dash App"
-    app.layout = layout
-    register_callbacks(app)
+    app.layout = create_layout(df)
+    register_callbacks(app, df)
     return app
 
 if __name__ == '__main__':
-    app = create_app()
+    init_db()
+    df = pl.read_csv("data/prepared_data.csv")
+    app = create_app(df)
     app.run_server(debug=True)

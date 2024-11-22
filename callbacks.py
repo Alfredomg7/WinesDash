@@ -5,14 +5,13 @@ from dash import Dash, Input, Output
 import components as cmp
 from services import filter_by_category, group_by_country_and_color, group_by_country_and_year
 
-def register_callbacks(app: Dash) -> None:
+def register_callbacks(app: Dash, df: pl.DataFrame) -> None:
     @app.callback(
         [Output('wine-color-distribution', 'figure'),
         Output('registration-trend', 'figure')],
         [Input('category-filter', 'value')]
     )
     def update_charts(categories: list[str]) -> Tuple[px.bar, px.line]:
-        df = pl.read_csv("data/prepared_data.csv")
         filtered_df = filter_by_category(df, categories)
         color_distribution_df = group_by_country_and_color(filtered_df)
         registration_trend_df = group_by_country_and_year(filtered_df)
