@@ -11,9 +11,13 @@ def group_by_country_and_color(df: pl.DataFrame) -> pl.DataFrame:
     ])
 
 def group_by_country_and_year(df: pl.DataFrame) -> pl.DataFrame:
-    return df.group_by(['Country', 'Registration Year']).agg([
+    df = df.group_by(['Country', 'Registration Year']).agg([
         pl.count('Registration Year').alias('Count')
     ])
+    df = df.with_columns(
+        df['Registration Year'].cast(pl.Utf8)
+    )
+    return df.sort('Registration Year')
 
 def get_categories(df: pl.DataFrame) -> list[str]:
     categories = df['Category'].unique().to_list()

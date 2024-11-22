@@ -16,16 +16,18 @@ def create_layout(df: pl.DataFrame) -> dbc.Container:
 
     categories_list = get_categories(df)
     category_options = [{"label": category, "value": category} for category in categories_list]
-    category_filter = cmp.create_checklist(
+    category_filter = cmp.create_multi_select(
         id="category-filter",
         options=category_options,
-        value=[]
+        value=[],
+        placeholder="Select wine categories"
     )
 
     distribution_chart = dcc.Graph(id="wine-color-distribution")
     trend_chart = dcc.Graph(id="registration-trend")
 
-    layout = dbc.Container([
+    layout = html.Div([
+        dbc.Container([
             dbc.Row([
                 dbc.Col(
                     title,
@@ -61,7 +63,7 @@ def create_layout(df: pl.DataFrame) -> dbc.Container:
             ),
         ],
         fluid=True,
-        className="bg-dark text-light p-4",
-        style={"height": "100%"}
-    )
+        className="mx-auto",
+        )
+    ], className="bg-dark text-light p-4", style={"min-height": "100vh"})
     return layout

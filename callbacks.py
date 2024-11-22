@@ -28,7 +28,8 @@ def register_callbacks(app: Dash, df: pl.DataFrame) -> None:
         }
 
         distribution_fig = cmp.create_bar_chart(
-            color_distribution_df, x=x1, y=y, color=color1, title=title1, color_discrete_map=wines_color_map
+            color_distribution_df, x=x1, y=y, color=color1, title=title1, 
+            color_discrete_map=wines_color_map
         )
 
         x2 = 'Registration Year'
@@ -39,8 +40,9 @@ def register_callbacks(app: Dash, df: pl.DataFrame) -> None:
             'France': cmp.FRANCE_COLOR,
             'Italy': cmp.ITALY_COLOR,
         }
-        trend_fig = cmp.create_scatter_chart(
-            registration_trend_df, x=x2, y=y, color=color2, title=title2, color_discrete_map=countries_color_map
+        trend_fig = cmp.create_bar_chart(
+            registration_trend_df, x=x2, y=y, color=color2, title=title2, 
+            color_discrete_map=countries_color_map
         )
 
         return distribution_fig, trend_fig
