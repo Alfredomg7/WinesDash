@@ -1,3 +1,4 @@
+import os
 from dash import Dash
 import dash_bootstrap_components as dbc
 import polars as pl
@@ -16,4 +17,5 @@ if __name__ == '__main__':
     init_db()
     df = pl.read_csv("data/prepared_data.csv")
     app = create_app(df)
-    app.run_server(debug=True)
+    port = int(os.environ.get("PORT", 8050))
+    app.run_server(host="0.0.0.0", port=port)
