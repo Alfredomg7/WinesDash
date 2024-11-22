@@ -1,6 +1,4 @@
 from dash import dcc
-from components.colors import ALT_BACKGROUND_COLOR
-
 def create_multi_select(
     id: str, 
     options: list,
